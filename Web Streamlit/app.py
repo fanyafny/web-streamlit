@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 from transformers import BertTokenizer, TFBertForSequenceClassification
+from huggingface_hub import hf_hub_download
 
 # Limit TensorFlow memory usage
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -14,7 +15,11 @@ if gpus:
 # Load the pre-trained BERT model and tokenizer
 PRE_TRAINED_MODEL = 'indobenchmark/indobert-base-p2'
 bert_model = TFBertForSequenceClassification.from_pretrained(PRE_TRAINED_MODEL, num_labels=2)
-bert_model.load_weights('bert-model.h5')
+
+# Download the model weights from Hugging Face
+model_path = hf_hub_download(repo_id="JokiTugasCoding/bert-model", filename="bert-model.h5")
+bert_model.load_weights(model_path)
+
 bert_tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL)
 
 # Define the maximum length for padding/truncating sequences
