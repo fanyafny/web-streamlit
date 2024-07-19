@@ -3,3 +3,4 @@ tensorflow
 transformers
 huggingface_hub
 tokenizers
+tf-keras
