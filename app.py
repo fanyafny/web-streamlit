@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 from transformers import BertTokenizer, TFBertForSequenceClassification
+from huggingface_hub import hf_hub_download
 
 # Limit TensorFlow memory usage
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -51,7 +52,7 @@ st.write("Masukkan Teks Headline")
 headline = st.text_input("")
 
 # Button for making prediction
-if st.button("Hasil Deteksi"):
+if st.button("Hasil Deteksi", key='detect_button', use_container_width=True, disabled=False):
     if headline:
         result = predict_clickbait(headline)
         if result == 'Clickbait':
@@ -60,3 +61,4 @@ if st.button("Hasil Deteksi"):
             st.markdown(f"<div style='background-color: lightgreen; color: darkgreen; padding: 10px;'>{result}</div>", unsafe_allow_html=True)
     else:
         st.warning("Masukkan teks headline terlebih dahulu.")
+
